@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 
-import { Hero } from "../classs/hero";
+import { Hero } from "../model/hero";
 import { HEROES } from "../../assets/mock-heroes";
 import {MessageService} from './message.service'
 
@@ -29,6 +29,9 @@ export class HeroService {
   ) { };
 
   updateHero (hero: Hero): Observable<any> {
+    const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
     return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
